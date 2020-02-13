@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Code for the DKAN Collections feature.
+ */
+
+include_once 'dkan_dataset_collections.features.inc';
+
+/**
+ * Implements hook_node_view_alter().
+ */
+function dkan_dataset_collections_node_view_alter(&$build) {
+  if ($build['#bundle'] === 'dataset') {
+    $collection = views_embed_view('collection_parent', 'panel_pane_1');
+    if (!empty($build['body'][0]['#markup'])) {
+      $build['body'][0]['#markup'] .= $collection;
+    }
+    elseif (empty($build['body'][0]['#markup'])) {
+      $build['body'][0]['#markup'] = $collection;
+
+    }
+  }
+}
